@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace Codepulse.Model
 {
-    public class Category:Base
+    public class Base
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public string UrlHandle { get; set; }
     }
 }
