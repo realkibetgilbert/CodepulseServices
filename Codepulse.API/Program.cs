@@ -11,6 +11,7 @@ builder.Services.AddDbContext<CodepulseDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("CodepulseConnectionString")
 ));
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -25,7 +26,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors(options =>
+{
+    options.AllowAnyHeader();
+    options.AllowAnyMethod();
+    options.AllowAnyOrigin();
+}
+    );
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
