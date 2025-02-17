@@ -1,6 +1,10 @@
 ﻿using Codepulse.API.Data;
+using Codepulse.API.DTOs.Category;
 using Codepulse.API.Repositories.Interfaces;
 using Codepulse.Model;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Codepulse.API.Repositories.Implementations
 {
@@ -21,24 +25,45 @@ namespace Codepulse.API.Repositories.Implementations
             return category;
         }
 
-        public Task<Category?> DeleteAsync(long id)
+        public async Task<Category?> DeleteAsync(long id)
         {
-            throw new NotImplementedException();
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (category == null) return null;
+            _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
+            return category;
         }
 
-        public Task<List<Category>> GetAllAsync()
+        public async Task<List<Category>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Categories.OrderByDescending(c => c.Id).ToListAsync();
+        }
+        public async Task<Category?> GetByIdAsync(long id)
+        {
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (category == null) return null;
+            return category;
         }
 
-        public Task<Category?> GetByIdAsync(long id)
+        public async Task<Category?> UpdateAsync(Category category)
         {
-            throw new NotImplementedException();
+            var existingCategory = await _context.Categories.FirstOrDefaultAsync(r => r.Id == category.Id);
+
+            if (category == null)
+            {
+                return null;
+            }
+            if (existingCategory != null)
+            {
+                existingCategory.Name = category.Name;
+                existingCategory.UrlHandle = category.UrlHandle;
+
+            }
+            await _context.SaveChangesAsync();
+            return existingCategory;
         }
 
-        public Task<Category?> UpdateAsync(long id, Category category)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
