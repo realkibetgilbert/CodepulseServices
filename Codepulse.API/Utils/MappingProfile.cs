@@ -13,7 +13,7 @@ namespace Codepulse.API.Utils
             CreateMap<CategoryToCreateDto, Category>().ReverseMap();
             CreateMap<Category, CategoryToDisplayDto>().ReverseMap();
             CreateMap<CategoryToUpdateDto, Category>().ReverseMap();
-            CreateMap<CreateBlogPostRequestDto, BlogPost>().ReverseMap();
+            CreateMap<CreateBlogPostRequestDto, BlogPost>().ForMember(dest => dest.Categories, opt => opt.Ignore());
             CreateMap<BlogPost, BlogPostToDisplay>().ReverseMap();
         }
     }
