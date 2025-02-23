@@ -1,10 +1,7 @@
-﻿using Codepulse.API.DTOs.Category;
-
-namespace Codepulse.API.DTOs.BlogPost
+﻿namespace Codepulse.API.DTOs.BlogPost
 {
-    public class BlogPostToDisplay
+    public class BlogPostToUpdate
     {
-        public long Id { get; set; }
         public string Title { get; set; }
         public string ShortDescription { get; set; }
         public string Content { get; set; }
@@ -13,6 +10,7 @@ namespace Codepulse.API.DTOs.BlogPost
         public DateTime PublishedDate { get; set; }
         public string Author { get; set; }
         public bool IsVisible { get; set; }
-        public List<CategoryToDisplayDto> Categories { get; set; }= new List<CategoryToDisplayDto>();
+
+        public List<int> Categories { get; set; }= new List<int>();
     }
 }
